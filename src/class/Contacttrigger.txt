@@ -22,9 +22,13 @@ trigger ContactTrigger on Contact (before insert, before update, after delete, a
         }
     }
     
-  	
+  
+
+  
 	// code to get record type
 	Id devRecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('RecordTypeNAme').getRecordTypeId();
+	
+	
 	
     // Added for the User story 
      if(Trigger.isAfter && Trigger.isInsert)
