@@ -8,6 +8,9 @@ trigger ContactTrigger on Contact (before insert, before update, after delete, a
             blogicContact.checkApplicantPhoto(trigger.new);
             copyContactAddress c= new copyContactAddress();
             c.copyContactMailingAddress(trigger.new);
+			if (c != null) {
+				System.debug('test');
+			}
         }
 
         if (trigger.isUpdate)
@@ -19,14 +22,7 @@ trigger ContactTrigger on Contact (before insert, before update, after delete, a
         }
     }
     
-    if (trigger.isAfter)
-    {
-        if (trigger.isDelete)
-        {
-            blogicContact.deleteAccountPerson(trigger.old);
-        }
-    }
-	
+  	
 	// code to get record type
 	Id devRecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('RecordTypeNAme').getRecordTypeId();
 	
