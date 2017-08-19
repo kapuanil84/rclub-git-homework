@@ -1,0 +1,46 @@
+trigger ContactTrigger on Contact (before insert, before update, after delete, after insert) {
+    set<id> Contactset = new set<id>();
+    if(trigger.isBefore)
+    {
+        if (trigger.isInsert)
+        {
+            blogicContact.createAccountPerson(trigger.new);
+            blogicContact.checkApplicantPhoto(trigger.new);
+            copyContactAddress c= new copyContactAddress();
+            c.copyContactMailingAddress(trigger.new);
+			if (c != null) {
+				System.debug('test');
+			}
+        }
+
+        if (trigger.isUpdate)
+        {
+            blogicContact.demoGraphicUpdates(trigger.new,trigger.oldMap);
+            blogicContact.checkApplicantPhoto(trigger.new); 
+            copyContactAddress c= new copyContactAddress();
+            c.copyContactMailingAddress(trigger.new);
+        }
+    }
+    
+  	
+	// code to get record type
+	Id devRecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('RecordTypeNAme').getRecordTypeId();
+	
+    // Added for the User story 
+     if(Trigger.isAfter && Trigger.isInsert)
+     {
+		for (contact c1 : trigger.new)
+		{
+			if (c1.recordTypeid == devRecordTypeId
+				&& Provider1__c != null) 
+			{
+			   Contactset.add(c1.id);		  
+			}
+		}
+		system.debug('*******'+Contactset); 
+		if(Contactset.size()>0){
+			//ContactTriggerHandler.afterInsertHandler(Contactset);
+			ContactTriggerHandler.afterInsertHandler(Contactset, trigger.newmap);
+		}
+    }
+}
