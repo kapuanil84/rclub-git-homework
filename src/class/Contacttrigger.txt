@@ -21,7 +21,7 @@ trigger ContactTrigger on Contact (before insert, before update, after delete, a
             c.copyContactMailingAddress(trigger.new);
         }
     }
-    
+    vvvhhbhbjbjbjkbjk
     if (trigger.isAfter)
     {
         if (trigger.isDelete)
