@@ -17,8 +17,7 @@ trigger ContactTrigger on Contact (before insert, before update, after delete, a
         {
             blogicContact.demoGraphicUpdates(trigger.new,trigger.oldMap);
             blogicContact.checkApplicantPhoto(trigger.new); 
-            copyContactAddress c= new copyContactAddress();
-            c.copyContactMailingAddress(trigger.new);
+            
         }
     }
     
