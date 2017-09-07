@@ -43,9 +43,10 @@ trigger caseTrigger on Case (before insert, before update, after insert, after u
         {
 	        triggerFlags.bypassCaseTrigger = false;
             blogicCase.demoGraphicUpdates(trigger.new,trigger.oldMap);
-		    system.debug('***In CaseTrigger: AfterUpdate');
-            blogicCase.caseAppealProcess(trigger.oldMap, trigger.new);
-            blogicCase.caseCloseProcess(trigger.oldMap, trigger.new);
+			logicCase.createCaseTeamMember(trigger.new);
+            blogicCase.createCaseApproval(trigger.new);
+            blogicCase.createApplicationRequest(null, trigger.new);
+		   
 			//blogicCase.caseRTAFormalAppealsAfterUpdate(trigger.oldMap, trigger.new);
             triggerFlags.bypassCaseTrigger=false;
         }
